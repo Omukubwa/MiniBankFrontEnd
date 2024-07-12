@@ -1,0 +1,96 @@
+<div class="container" *ngIf="userProfile != null">
+    <div class="row">
+        <h2>Welcome, {{userProfile.customerName}}</h2>
+    </div>
+    <div class="row alert alert-info">
+        <div class="col-md-3">
+            <h6>Account Number<br />{{userProfile?.accounts[0]?.accountNumber}}</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Account Balance<br />Kes {{userProfile?.accounts[0]?.accountBalance}}</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Account Name<br />{{userProfile?.accounts[0]?.accountName}}</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Date Opened:<br />{{userProfile?.accounts[0]?.createdOn | date}}</h6>
+        </div>
+    </div>
+
+    <div class="row py-2">
+        <div class="col-md-4">
+            <a href="/banking/deposit" class="btn btn-lg btn-outline-success text-decoration-none text-start">
+                <i class="fas fa-money-bill-wave"></i> Cash Deposit
+            </a>
+        </div>
+    
+        <div class="col-md-4">
+            <a href="/banking/withdraw" class="btn btn-lg btn-outline-success text-decoration-none text-start">
+                <i class="fas fa-money-bill-alt"></i> Cash Withdrawal
+            </a>
+        </div>
+    
+        <div class="col-md-4 text-end">
+            <a href="/banking/transfer" class="btn btn-lg btn-outline-success text-decoration-none text-start">
+                <i class="fas fa-exchange-alt"></i> Funds Transfer
+            </a>
+        </div>
+    </div>
+    <div class="row py-1 justify-content-between">
+        <div class="col-md-4">
+            <a href="/banking/statement-mini" class="btn btn-lg btn-outline-success text-decoration-none text-start">
+                <i class="fas fa-receipt"></i> Mini Statement
+            </a>
+        </div>
+    
+        <div class="col-md-4">
+            <a href="/banking/statement-full" class="btn btn-lg btn-outline-success text-decoration-none text-start">
+                <i class="fas fa-file-alt"></i> Full Statement
+            </a>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/banking/search" class="btn btn-lg btn-outline-success text-decoration-none text-start">
+                <i class="fas fa-search"></i> Search
+            </a>
+        </div>
+    </div>
+    
+
+    <div class="row">
+        <div class="col-md">
+            <h2>Transactions</h2>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Transaction Date</th>
+                  <th>Transaction Code</th>
+                  <th>Transaction Type</th>
+                  <th>Amount</th>
+                  <th>AccountNo</th>
+                  <th>Dr/Cr</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaction of fullStatement">
+                  <td>{{ transaction?.createdOn | date }}</td>
+                  <td>{{ transaction?.transactionCode}}</td>
+                  <td [ngSwitch]="transaction?.transactionType">
+                    <span *ngSwitchCase="'Deposit'" class="btn btn-outline-primary">
+                      {{ transaction?.transactionType }}
+                    </span>
+                    <span *ngSwitchCase="'Funds Transfer'" class="btn btn-outline-warning">
+                      {{ transaction?.transactionType }}
+                    </span>
+                    <span *ngSwitchCase="'Withdrawal'" class="btn btn-outline-success">
+                      {{ transaction?.transactionType }}
+                    </span>
+                  </td>
+                  <td>{{ transaction?.transactionAmount | currency }}</td>
+                  <td>{{ transaction?.accountNumber }}</td>
+                  <td>{{ transaction?.drCr }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>

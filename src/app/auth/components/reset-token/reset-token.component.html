@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row py-1">
+        <div class="col-md-6">
+            <h2>Kindly Provide your Customer Id and submit to receive PIN Reset code in your email</h2>
+        </div>
+    </div>
+    <div class="row py-1">
+        <div class="col-md-6">
+            <hr />
+            <p class="alert alert-success" *ngIf="status && message != ''">{{message}}</p>
+            <p class="alert alert-danger" *ngIf="!status && message != ''">{{message}}</p>
+        </div>
+    </div>
+    <div class="row py-1">
+        <form (ngSubmit)="submit()" #form="ngForm">
+            <div class="row py-1">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="customerId" placeholder="Enter Your Customer ID and Submit"
+                            name="customerId" [(ngModel)]="customerId" class="form-control" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row py-1">
+        <a href="/reset" class="text-decoration-none text-start">
+            Reset Pin Now
+        </a>
+    </div>
+</div>

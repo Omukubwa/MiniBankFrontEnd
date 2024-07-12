@@ -1,0 +1,31 @@
+<div class="container mx-0">
+    <div class="row">
+        <div class="col-6">
+            <img src="/assets/9729.jpg" style="height: 100%;width: 100%;" />
+        </div>
+        <div class="col pt-5">
+            <div class="row">
+                <h1 *ngIf="authService.isLoggedIn()">Hi, {{userProfile.customerName}}</h1>
+                <hr/>
+                <h3>Welcome to Compulynx Digi Banking Platform.</h3>
+                <h4>We offer the following services:</h4>
+                <h5>1. Cash Deposit</h5>
+                <h5>2. Cash Withdrawal</h5>
+                <h5>3. Funds Transfer</h5>
+                <h5>4. View Mini statement</h5>
+                <h5>5. View Full statement</h5>
+            </div>
+
+            <div *ngIf="!authService.isLoggedIn()" class="row pt-4 px-2" style="width: 60%;">
+                <a href="/login" class="text-decoration-none text-start">
+                    <i class="fas fa-sign-in-alt"></i> Log In To Access the Services
+                </a>
+            </div>
+            <div *ngIf="authService.isLoggedIn()" class="row pt-4 px-2" style="width: 60%;">
+                <a href="/banking/transact" class="text-decoration-none text-start">
+                    <i class="fas fa-sign-in-alt"></i> Start Transacting Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
