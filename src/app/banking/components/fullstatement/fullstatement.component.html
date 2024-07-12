@@ -1,0 +1,65 @@
+<div class="container" *ngIf="userProfile != null">
+    <div class="row">
+        <h2>Welcome, {{userProfile.customerName}}</h2>
+    </div>
+    <div class="row py-1">
+        <a href="/banking/transact" class="text-decoration-none text-start">
+            Back
+        </a>
+    </div>
+    <div class="row alert alert-info">
+        <div class="col-md-3">
+            <h6>Account Number<br />{{userProfile?.accounts[0]?.accountNumber}}</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Account Balance<br />Kes {{userProfile?.accounts[0]?.accountBalance}}</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Account Name<br />{{userProfile?.accounts[0]?.accountName}}</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Date Opened:<br />{{userProfile?.accounts[0]?.createdOn | date}}</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <h2>All Transactions</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Transaction Date</th>
+                        <th>Transaction Code</th>
+                        <th>Transaction Type</th>
+                        <th>Amount</th>
+                        <th>AccountNo</th>
+                        <th>Dr/Cr</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let transaction of fullStatement">
+                        <td>{{ transaction?.createdOn | date }}</td>
+                        <td>{{ transaction?.transactionCode}}</td>
+                        <td [ngSwitch]="transaction?.transactionType">
+                            <span *ngSwitchCase="'Deposit'" class="btn btn-outline-primary">
+                                {{ transaction?.transactionType }}
+                            </span>
+                            <span *ngSwitchCase="'Funds Transfer'" class="btn btn-outline-warning">
+                                {{ transaction?.transactionType }}
+                            </span>
+                            <span *ngSwitchCase="'Withdrawal'" class="btn btn-outline-success">
+                                {{ transaction?.transactionType }}
+                            </span>
+                        </td>
+
+                        <td>{{ transaction?.transactionAmount | currency }}</td>
+                        <td *ngIf="transaction?.accountNumber == account"><span class="btn btn-outline-success"> {{
+                                transaction?.accountNumber }}</span></td>
+                        <td *ngIf="transaction?.accountNumber != account"><span class="btn btn-outline-primary"> {{
+                                transaction?.accountNumber }}</span></td>
+                        <td>{{ transaction?.drCr }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
